@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEAD SECTION -->
+<head>
+
+    <!-- Title at Browser Bar -->
+    <title>User Login</title>
+
+    <!-- Linking -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="{{ url_for('static', filename='jquery/jquery-3.7.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+
+</head>
+
+
+<!-- BODY SECTION -->
+<body>
+
+    <!-- HEADER -->
+    <header class="headerBar d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+        <a href="handlelogout"
+            class="ms-5 d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4 text-light fw-bold shadow-sm px-2 rounded">Library Management System</span>
+        </a>
+
+    </header>
+    <div class="container d-flex justify-content-center h">
+        <div class="col-4 border border-black my-5 p-5 rounded shadow-lg"><!--the container-->
+            <h3 class="">Login</h3>
+            <form action="dashboard" class="mt-5" method="post">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="loginEmail">
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="loginPassword">
+                </div>
+                <div class="d-flex justify-content-center mt-5"><button type="submit"
+                        class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <div class="mt-5 d-flex justify-content-between">
+                <a href="/signup">Sign Up</a>
+                <a href="adminlogin">Admin Login</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="{{ url_for('static', filename='bootstrap/bootstrap.bundle.js') }}"></script>
+
+</html>

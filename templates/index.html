@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEAD SECTION -->
+<head>
+
+    <!-- Title at Browser Bar -->
+    <title>Library Management System</title>
+
+    <!-- Linking -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="{{ url_for('static', filename='jquery/jquery-3.7.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+
+</head>
+
+
+<!-- BODY SECTION -->
+<body class="homeBody">
+
+    <!-- HEADER -->
+    <header class="headerBar d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+        <!-- LOGO / TITLE (clickcable back to index) -->
+        <a href="/"
+            class="ms-5 d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4 text-light fw-bold shadow-sm px-2 rounded">Library Management System</span>
+        </a>
+
+        <!-- Login button -->
+        <ul class="nav nav-pills">
+            <li class="nav-item me-5"><a href="login" class="nav-link text-light">Login</a></li>
+        </ul>
+
+    </header>
+
+    <!-- CONTEXT BOX -->
+    <div class="container d-flex justify-content-center">
+        <div class="card mb-3 my-5 shadow-lg">
+            <div class="row g-0">
+
+                <!-- IMAGE; look into static folder to change and the link -->
+                <div class="col-md-4 overflow-hidden d-flex justify-content-center">
+                    <img src="../static/image/home.jpg" class="rounded-start" alt="...">
+                </div>
+
+                <!-- TEXT -->
+                <div class="col-md-8">
+                    <div class="card-body">
+
+                        <!-- HEAD1, P1 -->
+                        <h5 class="card-title">Libary Management System</h5>
+                        <p class="card-text my-5"> 
+                            Insert Text Here
+
+
+
+
+                        </p>
+
+                        <!-- HEAD2, P2 -->
+                        <h5 class="card-title">Get started</h5>
+                        <p class="card-text mt-5">
+                            "Ready to get started? Login ETC"
+
+
+
+
+                        </p>
+                        <!--     DO NOT TOUCH ANY OF THE </DIV>    -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- BODY SECTIO ENDS -->
+</body>
+
+<script src="{{ url_for('static', filename='bootstrap/bootstrap.bundle.js') }}"></script>
+
+</html>

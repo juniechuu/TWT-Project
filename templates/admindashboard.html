@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- HEAD SECTION -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Header + Linking -->
+    <title>Dashboard - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="{{ url_for('static', filename='jquery/jquery-3.7.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+
+</head>
+
+
+<!-- BODY SECTION -->
+<body>
+
+    <!-- Header for the page -->    
+    <header class="headerBar d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+        <a href="/"
+            class="ms-5 d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4 text-light fw-bold shadow-sm px-2 rounded">Library Management System</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item me-5"><a href="/" class="nav-link text-light">Log out</a></li>
+        </ul>
+    
+    </header>
+
+    <!-- Container -->
+    <div class="container">
+
+        <!-- Main Title -->
+        <!-- <hr> tag is a thematic break or horizontal rule in an HTML document -->
+        <h2 class="mx-1 d-flex justify-content-between"> <span>Admin Dashboard</span><span id="time" class="fw-normal">
+            </span></h2>
+        <hr>
+
+        <!-- NAVIGATION BAR -->
+        <div class=" border-secondary mx-1 col border border-3 rounded-4  py-3 px-4 mb-5">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+
+                <!-- BOOK LIST -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-AR-tab" data-bs-toggle="pill" data-bs-target="#pills-AR"
+                        type="button" role="tab">Book List</button>
+                </li>
+
+                <!-- PENDING REQUEST -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-PR-tab" data-bs-toggle="pill" data-bs-target="#pills-PR"
+                        type="button" role="tab">Pending Request</button>
+                </li>
+
+                <!-- STUDENT LIST -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab">Student List</button>
+                </li>
+
+                <!-- BORROW HISTORY -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-history" type="button" role="tab">Borrow History</button>
+                </li>
+
+                <!-- ADD BOOK -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-add" type="button" role="tab">Add a Book</button>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="mx-1 tab-content" id="pills-tabContent">
+
+            <!-- BOOK LIST w/ Action -->
+            <div class="tab-pane fade show active" id="pills-AR" role="tabpanel" tabindex="0">
+                <h3>Book List</h3>
+                <hr>
+                <div id="bookList" class="container"></div>
+            </div>
+
+            <!-- PENDING REQUEST w/ Action -->
+            <div class="tab-pane fade" id="pills-PR" role="tabpanel" tabindex="0">
+                <h3>Pending Request</h3>
+                <hr>
+                <div id="pendingRequest" class="container"></div>
+            </div>
+
+            <!-- STUDENT LIST -->
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" tabindex="0">
+                <h3>Student List</h3>
+                <hr>
+                <div id="studentList" class="container"></div>
+            </div>
+
+            <!-- BORROW HISTORY -->
+            <div class="tab-pane fade" id="pills-history" role="tabpanel" tabindex="0">
+                <h3>Borrow History</h3>
+                <hr>
+                <div id="borrowHistory" class="container"></div>
+            </div>
+
+            <!-- ADD A BOOK -->
+            <div class="tab-pane fade" id="pills-add" role="tabpanel" tabindex="0">
+
+                <!-- THE TEXTS -->
+                <h3>Add a Book</h3>
+                <p>Please add Description!</p>
+                <p>Description Line 2</p>
+
+                <hr>
+
+                <!-- THE FORM -->
+                <div class="container">
+                    <form class="col-6" id="addbookForm" action="addabook" method="POST">
+
+                        <!-- BOOK ISBN -->
+                        <div class="mb-3">
+                            <label for="addbookISBN" class="form-label">1. Book ISBN</label>
+                            <textarea name="addISBN" class="form-control" id="addbookISBN" rows="1"></textarea>
+                            <div class="ps-2 invalid-feedback" id="isbnInvalid"></div>
+                            <div class="ps-2 valid-feedback" id="isbnValid">- Looks good!</div>
+                        </div>
+
+                        <!-- BOOK TITLE -->
+                        <div class="mb-3">
+                            <label for="addbookTitle" class="form-label">2. Book Title</label>
+                            <textarea name="addTitle" class="form-control" id="addbookTitle" rows="1"></textarea>
+                            <div class="ps-2 invalid-feedback" id="titleInvalid"></div>
+                            <div class="ps-2 valid-feedback" id="titleValid">- Looks good!</div>
+                        </div>
+
+                        <!-- BOOK AUTHOR -->
+                        <div class="mb-3">
+                            <label for="addbookAuthor" class="form-label">3. Book Author</label>
+                            <textarea name="addAuthor" class="form-control" id="addbookAuthor" rows="1"></textarea>
+                            <div class="ps-2 invalid-feedback" id="authorInvalid"></div>
+                            <div class="ps-2 valid-feedback" id="authorValid">- Looks good!</div>
+                        </div>
+
+                        <!-- BOOK GENRE -->
+                        <div class="mb-3">
+                            <label for="addbookGenre" class="form-label">4. Genre</label>
+                            <div class="input-group">
+                                <div class="d-flex">
+                                    <select class="form-select" name="genre" id="addbookGenre">
+                                        <option selected>Select Genre</option>
+                                        <option value="Fiction">Fiction</option>
+                                        <option value="Dystopian Fiction">Dystopian Fiction</option>
+                                        <option value="Fantasy">Fantasy</option>
+                                        <option value="Romance">Romance</option>
+                                        <option value="History">History</option>
+                                        <option value="Science">Science</option>
+                                        <option value="Non-Fiction">Non-Fiction</option>
+                                        <option value="Self-Help">Self-Help</option>
+                                        <option value="Biography">Biography</option>
+                                        <option value="Science Fiction">Science Fiction</option>
+                                        <option value="Thriller">Thriller</option>
+                                        <option value="Adventure">Adventure</option>
+                                        <option value="Comedy">Comedy</option>
+                                        <option value="Satire">Satire</option>
+                                    </select>
+                                    <div class="ps-2 invalid-feedback" id="genreInvalid"></div>
+                                    <div class="ps-2 valid-feedback" id="genreValid">- Looks good!</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- BOOK DESCRIPTION -->
+                        <div class="mb-3">
+                            <label for="addbookDesc" class="form-label">5. Book Description</label>
+                            <textarea name="addDesc" class="form-control" id="addbookDesc" rows="3"></textarea>
+                            <div class="ps-2 invalid-feedback" id="descInvalid"></div>
+                            <div class="ps-2 valid-feedback" id="descValid">- Looks good!</div>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="float">
+                            <button 
+                                id="MAbtn" 
+                                type="submit"
+                                class="btn btn-primary mb-3" disabled>
+                                Add Book
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+
+
+            <!-- END OF CONTENT -->
+        </div>
+        <!-- END OF CONTAINER -->
+    </div>
+
+
+    <!-- HIDDEN FORM FOR ACTION -->
+    <form id="hiddenForm" class="d-none" action="/setApprove" method="POST">
+        <input type="hidden" id="statusInput" name="status">
+        <input type="hidden" id="aidInput" name="aid">
+        <input type="hidden" id="availabilityInput" name="availability">
+    </form>
+
+<!-- BODY SECTION ENDS -->
+</body>
+
+<!-- JAVASCRIPT -->
+
+<script src="{{ url_for('static', filename='bootstrap/bootstrap.bundle.js') }}"></script>
+
+<!-- FOR ADD A BOOK JS -->
+<script src="{{ url_for('static', filename='script/addabook.js') }}"></script>
+
+
+<script>
+
+    function setApprove(status, aid, availability) {
+        // ISO format includes both date and time
+        console.log(status, aid, availability)
+        $('#statusInput').val(status);
+        $('#aidInput').val(aid);
+        $('#availabilityInput').val(availability);
+        $("#hiddenForm").submit();
+    }
+
+
+    $('.actionBtn').click(function (event) {
+        event.preventDefault();
+        console.log(123)
+    });
+
+    $(document).ready(function () {
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            var timeString = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+            $('#time').text(timeString);
+        }
+
+        updateTime(); // Initial call
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/admindashboardBL',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let tabledata = "";
+                    for (i = 0; i < response.length; i++) {
+                        tabledata +=
+                            `<tr>
+                                <th>`+ response[i][0] + `</th>
+                                <td>`+ response[i][1] + `</td>
+                                <td>`+ response[i][2] + `</td>
+                                <td>`+ response[i][4] + `</td>
+                                <td>`+ response[i][5] + `</td>
+                            </tr>`
+                    }
+                    $("#bookList").html(`<table class="table table-striped table-bordered border-black">
+                        <thead class="col-6">
+                        <tr>
+                            <th class="col-2">Book ISBN</th>
+                            <th class="col-3">Title</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Genre</th>
+                        </tr>
+                        </thead>
+                        <tbody>`+ tabledata +
+                        `
+                        </tbody>
+                    </table>
+                            `);
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/admindashboardSL',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let tabledata = "";
+                    for (i = 0; i < response.length; i++) {
+                        tabledata +=
+                            `<tr>
+                                <th>`+ response[i][0] + `</th>
+                                <td>`+ response[i][6] + `</td>
+                                <td>`+ response[i][3] + `</td>
+                                <td>`+ response[i][1] + `</td>
+                                <td>`+ response[i][4] + `</td>
+                            </tr>`
+                    }
+                    $("#studentList").html(`<table class="table table-striped table-bordered border-black">
+                        <thead class="col-6">
+                        <tr>
+                            <th class="col-1">No.</th>
+                            <th class="col-2">Student ID</th>
+                            <th class="col-3">Name</th>
+                            <th>Email</th>
+                            <th>Phone No.</th>
+                        </tr>
+                        </thead>
+                        <tbody>`+ tabledata +
+                        `
+                        </tbody>
+                    </table>
+                            `);
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/admindashboardPR',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let tabledata = "";
+                    for (i = 0; i < response.length; i++) {
+                        tabledata +=
+                            `<tr>
+                                <th>`+ response[i][0] + `</th>
+                                <td>`+ response[i][1] + `</td>
+                                <td>`+ response[i][8] + `</td>
+                                <td>`+ response[i][7] + `</td>
+                                <td>`+ response[i][6] + `</td>
+                                <td>
+                                    <div class="btn-group dropend" role="group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            
+                                            <li><button 
+                                                    onclick="setApprove('Approved', '`+ response[i][0] + `', 'Borrowed')" 
+                                                    class="optionBtn dropdown-item text-success" 
+                                                    data-status="Approved" 
+                                                    data-id="` + response[i][0] + `">
+                                                    Approve
+                                                </button>
+                                            </li>
+
+                                            <li><button 
+                                                    onclick="setApprove('', '`+ response[i][0] + `', 'Available')" 
+                                                    class="optionBtn dropdown-item text-danger" 
+                                                    data-status="Rejected" 
+                                                    data-id="` + response[i][0] + `">
+                                                    Reject
+                                                </button>
+                                            </li>
+                                        
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>`
+                    }
+                    $("#pendingRequest").html(`<table class="table table-striped table-bordered border-black">
+                        <thead class="col-6">
+                        <tr>
+                            <th class="col-2">Book ISBN</th>
+                            <th class="col-3">Title</th>
+                            <th>Date Requested</th>
+                            <th>Approval Status</th>
+                            <th>Requester ID</th>
+                            <th class="col-1">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>`+ tabledata +
+                        `
+                        </tbody>
+                    </table>
+                            `);
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/dashboardTriggerBH',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let tabledata = "";
+                    for (i = 0; i < response.length; i++) {
+                        tabledata +=
+                            `<tr>
+                                <th>`+ response[i][0] + `</th>
+                                <td>`+ response[i][1] + `</td>
+                                <td>`+ response[i][2] + `</td>
+                                <td>`+ response[i][3] + `</td>
+                            </tr>`
+                    }
+                    $("#borrowHistory").html(`<table class="table table-striped table-bordered border-black">
+                        <thead class="col-6">
+                        <tr>
+                            <th class="col-2">Book ISBN</th>
+                            <th class="col-3">Title</th>
+                            <th>Date Requested</th>
+                            <th>Requester ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>`+ tabledata +
+                        `
+                        </tbody>
+                    </table>
+                            `);
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+
+
+    });
+
+
+</script>
+
+</html>

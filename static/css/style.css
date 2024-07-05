@@ -1,0 +1,18 @@
+.homeDiv {
+  background-image: url("../image/home.webp");
+}
+
+.headerBar {
+  background-color: #499bd6;
+}
+
+body {
+  background-color: #eeeeee;
+}
+
+.gocentresearch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 8px;
+}
