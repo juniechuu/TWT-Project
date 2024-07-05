@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 import requests
 
 app = Flask(__name__)
+app.secret_key = 'TWT'  # Necessary for flashing messages
+
 
 from sqlite3 import *
 import os
@@ -28,7 +30,7 @@ def handlelogout():
 def login():
     return render_template("login.html")
 
-@app.route('/signup',methods=["POST","GET"]) # James: I added GET so the <a> will work
+@app.route('/signup',methods=["POST","GET"]) 
 def signup():
     email = request.form.get("email")
     password = request.form.get("password")
@@ -88,13 +90,14 @@ def handlelogin():
     else: ## unable to index a NoneType for email; doesn't exist in database
         emailitem,passworditem = None,None
         success = True
-        message3 = "Email does not exist!"
+        message0 = "Email does not exist!"
+        flash('Incorrect password or email does not exist!')
         return redirect(url_for('login'))
         
 
     if emailitem != email or passworditem != password: ## if email or password incorrect, return back login
         success = True
-        message4 = "Incorrect password!"
+        message4 = "Incorrect password OR email does not exist!"
         return redirect(url_for('login'))
     global userid
     global fulname
@@ -297,7 +300,7 @@ def admindashboard():
         adminiditem,adminpassworditem = None,None
         success = True
         message3 = "ID DOES NOT EXIST!"
-        flash_message = "TRUE"
+        flash('Incorrect Admin ID or Password!\n                        Please contact Administrator!')
         return redirect(url_for('adminlogin'))
         
 
