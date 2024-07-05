@@ -61,6 +61,7 @@ phone,gender,ic,city,state,address,zipcode) VALUES(?,?,?,?,?,?,?,?,?,?)''',
             db.close()
             
             success = True
+            flash('Succesfully signed up!')
             return render_template("login.html", msg="Sign Up Successfully!") 
         else:
             if existingemail:
