@@ -13,6 +13,17 @@
     <script src="{{ url_for('static', filename='jquery/jquery-3.7.1.js') }}"></script>
     <script src="{{ url_for('static', filename='script/script.js') }}"></script>
 
+    <!-- Script for Pop Up -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                alert(flashMessage.innerText);
+            }
+        });
+    </script>
+
+    
 </head>
 
 
@@ -44,6 +55,16 @@
                         class="btn btn-primary">Login</button>
                 </div>
             </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div id="flash-message" style="display: none;">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+
             <div class="mt-5 d-flex justify-content-between">
                 <a href="/signup">Sign Up</a>
                 <a href="adminlogin">Admin Login</a>

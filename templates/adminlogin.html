@@ -7,35 +7,22 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
     <script src="{{ url_for('static', filename='jquery/jquery-3.7.1.js') }}"></script>
     <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+
+
+    <!-- Script for Pop Up -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                alert(flashMessage.innerText);
+            }
+        });
+    </script>
+
 </head>
 
-<body onload="flashMessage()">
-    <script>
-        function flashMessage() {
-            if ("{{ flash_message }}" == "TRUE") {
-                alert("[INVALID ID OR INCORRECT PASSWORD]");
-            }
-        }
-    </script>
-    <!-- <form action="dashboard" method="post">
-        <label>Email:<input type="text" name="email" placeholder="Email" id="email" class="info">
-        </label><br>
-        <label>Password:<input type="password" name="password" placeholder="Password" id="password" class="info">
-            <br>
-
-            <input type="submit" class="menu" name="login" value="Login">
-    </form>
-    <br>
-    <br>
- 
-    <form action="signup" method="post">
-        <label><input type="submit" class="menu" name="signup" value="Sign Up"> </label>
-    </form>
-
-    <form action="adminlogin" method="post">
-        <label><input type="submit" class="menu" name="signup" value="Admin Login"> </label>
-    </form>
-    <br>-->
+<body>
+    
     <header class="headerBar d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
 
         <a href="/"
@@ -50,7 +37,7 @@
             <form action="admindashboard" class="mt-5" method="post">
                 <div class="mb-3">
                     <label for="loginEmail" class="form-label">Admin ID</label>
-                    <input type="number" class="form-control" name="admin_id" id="loginEmail">
+                    <input type="text" inputmode="numeric" class="form-control" name="admin_id" id="loginEmail">
                 </div>
                 <div class="mb-3">
                     <label for="loginPassword" class="form-label">Password</label>
@@ -60,6 +47,14 @@
                         class="btn btn-primary">Login</button>
                 </div>
             </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div id="flash-message" style="display: none;">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 </body>
