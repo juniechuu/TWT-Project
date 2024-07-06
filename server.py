@@ -184,6 +184,18 @@ def dashboardTriggerBReturn():
 
 
 
+@app.route('/dashboardTriggerAddHistory', methods=["POST"])
+def dashboardTriggerAddHistory():
+    db = connect('library.db')
+    c = db.cursor()
+    global userid 
+    c.execute('''SELECT * FROM bookhistory WHERE action IN (?, ?) ORDER BY date_request DESC''', ("Added", "Deleted"))
+    bookhistory = c.fetchall()
+    db.commit()
+    db.close()
+    return jsonify(bookhistory)
+
+
 @app.route('/dashboardTriggerBH', methods=["POST"])
 def dashboardTriggerBH():
     db = connect('library.db')
@@ -194,6 +206,17 @@ def dashboardTriggerBH():
     db.commit()
     db.close()
     return jsonify(bookhistory)
+
+@app.route('/dashboardTriggerBRemove', methods=["POST"])
+def dashboardTriggerBRemove():
+    db = connect('library.db')
+    c = db.cursor()
+    global userid 
+    c.execute('''SELECT * FROM books''')
+    booklistremove = c.fetchall()
+    db.commit()
+    db.close()
+    return jsonify(booklistremove)
 
 @app.route('/admindashboardPR', methods=["POST"])
 def admindashboardPR():
@@ -313,6 +336,33 @@ def admindashboard():
 
     return render_template("admindashboard.html")
 
+@app.route('/removebook',methods=["POST"]) 
+def removebook():
+    email = request.form.get("email")
+    password = request.form.get("password")
+    
+    # SELECT * FROM books WHERE book_isbn = :bookisbn,
+
+    db = connect('library.db')
+    c = db.cursor()
+    bookisbn = request.form.get("selectedTitle")
+    reasonDelete = request.form.get("reasonDelete")
+    currentDateTime = request.form.get("currentDateTime")
+    row = c.fetchone()
+    print(bookisbn)
+    print(reasonDelete)
+    print(currentDateTime)
+    c.execute('''INSERT INTO bookhistory SELECT * FROM books WHERE book_isbn = :bookisbn''', {"bookisbn": bookisbn}) 
+    c.execute('''DELETE FROM books WHERE book_isbn = :bookisbn''', {"bookisbn": bookisbn}) 
+    c.execute('''UPDATE bookhistory SET action = ?, reason_details = ?, date_request = ? WHERE book_isbn = ?''', ('Deleted', reasonDelete, currentDateTime, bookisbn))
+
+    db.commit()
+    db.close()
+    
+    
+    return render_template("admindashboard.html")
+
+
 @app.route('/addabook',methods=["POST"]) 
 def addabook():
     email = request.form.get("email")
@@ -325,9 +375,15 @@ def addabook():
     bookauthor = request.form.get("addAuthor")
     bookgenre = request.form.get("genre")
     bookdesc = request.form.get("addDesc")
+    currentDateTime = request.form.get("currentDateTime")
+    print(bookisbn)
+    print(currentDateTime)
+
     global userid 
     c.execute('''INSERT INTO books(book_isbn,book_title,book_author,book_description,book_status,book_genre) VALUES(?,?,?,?,?,?)''',
                 (bookisbn,booktitle,bookauthor,bookdesc,"Available",bookgenre)) 
+    c.execute('''INSERT INTO bookhistory(book_isbn,book_title,book_author,book_description,book_status,book_genre, action, date_request, reason_details) VALUES(?,?,?,?,?,?,?,?,?)''',
+                (bookisbn,booktitle,bookauthor,bookdesc,"Available",bookgenre,"Added",currentDateTime, "Book succcesfully added to directory!")) 
     db.commit()
     db.close()
     
