@@ -3,11 +3,11 @@
 }
 
 .headerBar {
-  background-color: #499bd6;
+  background-color: #009FBD;
 }
 
 body {
-  background-color: #eeeeee;
+  background-color: #fdfeef;
 }
 
 .gocentresearch {
@@ -15,4 +15,15 @@ body {
     align-items: center;
     justify-content: center;
     padding-bottom: 8px;
+}
+
+.headerBar img {
+  width: auto;
+  height: 70px;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
